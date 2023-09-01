@@ -1,12 +1,14 @@
 import React from 'react';
-import {Box, Button, ButtonText, Text} from "@gluestack-ui/themed";
-import {AuthStepsEnum} from "../../../lib/auth";
+
+import { Box, Button, ButtonText, Text } from "@gluestack-ui/themed";
+
+import { AuthStepsEnum } from "../../../lib/auth";
 
 interface Props {
   stepHandler: (step: AuthStepsEnum) => void
 }
 
-const AuthRecoveryStep = ({stepHandler}: Props) => {
+const AuthRecoveryStep = ({ stepHandler }: Props) => {
   return (
     <Box>
       <Text>

@@ -1,11 +1,12 @@
 import React from 'react';
+
 import { Box, Text } from "@gluestack-ui/themed";
 
-interface Props {
+// interface Props {
+//
+// }
 
-}
-
-const MainMenuScreen = ({}: Props) => {
+const MainMenuScreen = () => {
   return (
     <Box>
       <Text>MENU PRINCIPAL</Text>

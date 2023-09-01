@@ -1,4 +1,4 @@
-import {Screen, Spacing, Typography, Colors, Radius} from "./constants";
+import { Screen, Spacing, Typography, Colors, Radius } from "./constants";
 
 export default {
   colors: Colors,
@@ -6,4 +6,4 @@ export default {
   screen: Screen,
   spacing: Spacing,
   radius: Radius
-}
+};

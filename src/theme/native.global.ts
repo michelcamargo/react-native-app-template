@@ -1,4 +1,4 @@
-import {Dimensions, StyleSheet} from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
 
 export const Typography = {
   familyHeading: 'Colus-Regular',
@@ -20,7 +20,7 @@ export const Typography = {
   lineHeightSmall: 1.2,
   lineHeightMedium: 1.4,
   lineHeightLarge: 1.6
-}
+};
 
 export const Colors = {
   monoWhite: "#FFFFFF",
@@ -40,13 +40,13 @@ export const Colors = {
   actionAccent: "#E2AE69",
   anchor: "#408BF9",
   danger: "#e32523"
-}
+};
 
 export const Screen = {
   width: Dimensions.get('screen').width,
   height: Dimensions.get('screen').height,
   containerWidth: '95%'
-}
+};
 
 export const Spacing = {
   smallest: 4,
@@ -59,7 +59,7 @@ export const Spacing = {
   larger: 20,
   extraLarge: 24,
   largest: 42,
-}
+};
 
 export const Radius = {
   smallest: 4,
@@ -68,7 +68,7 @@ export const Radius = {
   large: 12,
   largest: 20,
   rounded: 400
-}
+};
 
 export default StyleSheet.create({
   container: {
@@ -85,4 +85,4 @@ export default StyleSheet.create({
   headingText: {
     fontFamily: Typography.familyHeading
   }
-})
+});

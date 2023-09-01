@@ -1,28 +1,25 @@
+import { useEffect } from "react";
+
+import { GluestackUIProvider, Text, config } from "@gluestack-ui/themed";
+import { NavigationContainer } from "@react-navigation/native";
+import { registerRootComponent } from "expo";
+import { useFonts } from "expo-font";
 import {
   ActivityIndicator,
-  Alert,
-  BackHandler,
   Keyboard,
-  Platform,
   SafeAreaView,
-  StatusBar, StyleSheet,
+  StyleSheet,
   TouchableWithoutFeedback,
-  View,
-  TextInput
 } from "react-native";
-import {useEffect} from "react";
-import {useFonts} from "expo-font";
-import { Stack, navigationRef } from './src/components/Navigation';
-import { registerRootComponent } from "expo";
-import theme from './src/theme'
-import AuthenticationScreen from "./src/domains/Authentication";
-import TabNavigator from "./src/components/Navigation/TabNavigator";
-import toastConfig from "./src/components/Toaster/config";
 import Toast from "react-native-toast-message";
-import * as nativeStyle from "./src/theme/native.global";
-import {NavigationContainer} from "@react-navigation/native";
+
 import HeaderComponent from "./src/components/HeaderComponent";
-import { GluestackUIProvider, Text, Box, config } from "@gluestack-ui/themed"
+import { Stack, navigationRef } from './src/components/Navigation';
+import BottomTabNavigation from "./src/components/Navigation/BottomTabNavigation";
+import toastConfig from "./src/components/Toaster/config";
+import AuthenticationScreen from "./src/domains/Authentication";
+import theme from './src/theme';
+import * as nativeStyle from "./src/theme/native.global";
 
 const customFonts = {
   // 'Colus-Regular': require('./src/assets/fonts/Colus-Regular.ttf'),
@@ -70,9 +67,9 @@ export default function App() {
   //   return () => {
   //     if (interactResponseListener) Notifications.removeNotificationSubscription(interactResponseListener);
   //   }
-  }, [])
+  }, []);
 
-  let [fontsLoaded] = useFonts(customFonts);
+  const [fontsLoaded] = useFonts(customFonts);
   if (!fontsLoaded) return <ActivityIndicator />;
   
   /**
@@ -84,17 +81,16 @@ export default function App() {
   /**
    * Bloqueia ação de voltar do celular nas telas descritas
    */
-  const handleBackButton = () => {
-    const pageNames: Array<string> = [
-      "home",
-      "main-menu",
-      "search",
-    ]
-    if(!navigationRef.current.getCurrentRoute()) return true;
-    let currentPage = navigationRef.current.getCurrentRoute().name;
-    return pageNames.indexOf(currentPage) != -1;
-  }
-  
+  // const handleBackButton = () => {
+  //   const pageNames: Array<string> = [
+  //     "home",
+  //     "main-menu",
+  //     "search",
+  //   ];
+  //   if(!navigationRef.current.getCurrentRoute()) return true;
+  //   const currentPage = navigationRef.current.getCurrentRoute().name;
+  //   return pageNames.indexOf(currentPage) != -1;
+  // };
   
   return (
     // <ThemeProvider theme={currentTheme}>
@@ -106,7 +102,7 @@ export default function App() {
       {/*    translucent*/}
       {/*  />*/}
       {/*</View>*/}
-      <SafeAreaView style={{flex: 1, backgroundColor: currentTheme.colors.backgroundPrimary}}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: currentTheme.colors.backgroundPrimary }}>
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
           <NavigationContainer
             ref={navigationRef}
@@ -117,8 +113,8 @@ export default function App() {
               screenOptions={{
                 headerStyle: styles.commonStackHeader,
                 headerTitle: () => <HeaderComponent />,
-                headerLeftContainerStyle: {width: 0},
-                cardStyle: {backgroundColor: currentTheme.colors.backgroundPrimary}
+                headerLeftContainerStyle: { width: 0 },
+                cardStyle: { backgroundColor: currentTheme.colors.backgroundPrimary }
               }}
               defaultScreenOptions={{
                 headerLeftContainerStyle: { width: 0 }
@@ -145,7 +141,7 @@ export default function App() {
               />
               <Stack.Screen
                 name="main"
-                component={TabNavigator}
+                component={BottomTabNavigation}
                 options={{
                   title: "Tabs",
                   headerShown: false,
@@ -201,7 +197,7 @@ const styles = StyleSheet.create({
     backgroundColor: nativeStyle.Colors.actionPrimary,
     fontFamily: nativeStyle.Typography.familyBody,
     top: 8,
-    transform: [{scale: .85}]
+    transform: [{ scale: .85 }]
   },
   backLabel: {
     color: theme.lightTheme.colors.textPrimaryDark,
@@ -216,4 +212,4 @@ const styles = StyleSheet.create({
   backArrow: {
     color: theme.lightTheme.colors.textPrimaryDark
   }
-})
+});

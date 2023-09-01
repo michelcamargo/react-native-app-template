@@ -1,21 +1,38 @@
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { StyleSheet } from 'react-native';
-import * as nativeStyle from "../../../theme/native.global";
+
+import HomeScreen from "../../../domains/Home";
+import MainMenuScreen from "../../../domains/MainMenu";
 import { AppRoute } from "../../../lib/router";
-// import MainMenuView, { MainMenuHeader } from "../../../screens/main-menu";
-// import Icon from "../../iconpack";
-// import HomeView from "../../../screens/home";
-// import CartView, { CartHeader } from "../../../screens/cart/";
-// import ProfileView, { ProfileHeader } from "../../../screens/profile";
-// import HeaderComponent from "../../header/default";
-// import SearchView from "../../../screens/search";
-// import {OrderFormContext} from "../../order/order-form-context";
-// import LoginView from "../../../screens/authentication";
+import * as nativeStyle from "../../../theme/native.global";
 import HeaderComponent from "../../HeaderComponent";
-import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 
 interface Props {
-  tabs?: Array<AppRoute>,
+  tabs: Array<AppRoute>,
 }
+
+const defaultBottomTabs: Array<AppRoute> = [
+  {
+    name: 'main-menu',
+    Component: MainMenuScreen,
+    options: {
+      title: "menu",
+      headerShown: false,
+      // tabBarIcon: ({color, size}) => <Icon.Search color={color} size={32}/>,
+      detachPreviousScreen: true,
+      gestureEnabled: false
+    }
+  },
+  {
+    name: 'home',
+    Component: HomeScreen,
+    options: {
+      title: "Início",
+      // tabBarIcon: ({color, size}) => <Icon.Home color={color} size={32} />,
+      unmountOnBlur: false
+    },
+  },
+];
 
 /**
  * Cria barra inferior de navegação
@@ -25,7 +42,7 @@ export const Tab = createBottomTabNavigator();
 /**
  * Rotas relacionadas ao menu inferior da aplicação
  */
-const TabNavigator = ({ tabs }: Props) => {
+const BottomTabNavigation = ({ tabs = defaultBottomTabs }: Props) => {
   // const orderContext = useContext(OrderFormContext);
   // const orderProductCount: number = orderContext?.state.order?.items?.length || 0;
   
@@ -60,8 +77,8 @@ const TabNavigator = ({ tabs }: Props) => {
         initialParams={item.initialParams}
       />
     )) }
-  </Tab.Navigator>
-}
+  </Tab.Navigator>;
+};
 
 /**
  * Estilos nativos
@@ -88,8 +105,8 @@ const styles = StyleSheet.create({
     backgroundColor: nativeStyle.Colors.actionPrimary,
     fontFamily: nativeStyle.Typography.familyBody__bold,
     top: 8,
-    transform: [{scale: .85}]
+    transform: [{ scale: .85 }]
   }
-})
+});
 
-export default TabNavigator;
+export default BottomTabNavigation;

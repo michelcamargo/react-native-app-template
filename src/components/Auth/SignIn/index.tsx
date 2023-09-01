@@ -1,13 +1,15 @@
 import React from 'react';
-import {Box, Text, Button, ButtonText} from "@gluestack-ui/themed";
-import {AuthStepsEnum} from "../../../lib/auth";
-import {anchorNavigate} from "../../Navigation";
+
+import { Box, Text, Button, ButtonText } from "@gluestack-ui/themed";
+
+import { AuthStepsEnum } from "../../../lib/auth";
+import { anchorNavigate } from "../../Navigation";
 
 interface Props {
   stepHandler: (step: AuthStepsEnum) => void
 }
 
-const AuthSignInStep = ({stepHandler}: Props) => {
+const AuthSignInStep = ({ stepHandler }: Props) => {
   return (
     <Box>
       <Text>LOGIN</Text>

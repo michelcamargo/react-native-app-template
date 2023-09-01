@@ -1,18 +1,18 @@
-import appRoutes from '../../routes.tsx';
+import { AppRoute } from "../../lib/router";
+import defaultAppRoutes from '../../routes.tsx';
 import { Stack } from '../Navigation';
-import {AppRoute} from "../../lib/router";
 
 interface Props {
   routes?: Array<AppRoute>
 }
 
-const AppRouter = ({ routes = appRoutes }: Props) => {
+const AppRouter = ({ routes = defaultAppRoutes }: Props) => {
   return (
     <Stack.Navigator
       screenOptions={{
         // headerStyle: styles.commonStackHeader,
         // headerTitle: () => <HeaderComponent />,
-        headerLeftContainerStyle: {width: 0},
+        headerLeftContainerStyle: { width: 0 },
         // cardStyle: {backgroundColor: Colors.backgroundPrimary}
       }}
       defaultScreenOptions={{
@@ -23,12 +23,13 @@ const AppRouter = ({ routes = appRoutes }: Props) => {
         // validações de rota ?
         return (
           <Stack.Screen
+            key={index}
             name={route.name!}
             component={route.Component}
             options={route.options}
             initialParams={route.initialParams}
           />
-        )
+        );
       })
       
       }
