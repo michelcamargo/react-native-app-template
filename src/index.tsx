@@ -17,11 +17,12 @@ import {
 // import Styled from "./modules/styled";
 // // -----
 import theme from "./theme/light";
-import {navigationRef, Tab} from './components/Navigation';
+import { navigationRef } from './components/Navigation';
 import AppRouter from "./components/AppRouter";
 import {NavigationContainer} from "@react-navigation/native";
 import Toast from "react-native-toast-message";
 import toastConfig from "./components/Toaster/config";
+import appRoutes from "./routes";
 
 const customFonts = {
   'Colus-Regular': require('./assets/fonts/Colus-Regular.ttf'),
@@ -54,7 +55,7 @@ const Main = () => {
             fallback={<ActivityIndicator color={Colors.actionPrimary} />}
           >
             {/*<OrderFormProvider>*/}
-              <AppRouter />
+              <AppRouter routes={appRoutes} />
             {/*</OrderFormProvider>*/}
               <Toast config={toastConfig} />
           </NavigationContainer>

@@ -1,7 +1,6 @@
 import * as WebBrowser from "expo-web-browser";
-import {createNavigationContainerRef, StackActions, useRoute} from "@react-navigation/native";
+import { createNavigationContainerRef, StackActions } from "@react-navigation/native";
 import { RootStackParamList } from "../../lib/router";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 // import Survicate from "@survicate/react-native-survicate";
 
@@ -11,15 +10,9 @@ import { createStackNavigator } from "@react-navigation/stack";
 export const navigationRef = createNavigationContainerRef<RootStackParamList>();
 
 /**
- * Cria barra inferior de navegação
- */
-export const Tab = createBottomTabNavigator();
-
-/**
- * Pilha de navegação
+ * Pilha de navegação padrão
  */
 export const Stack = createStackNavigator();
-
 
 /**
  * Aciona browser interno
@@ -55,10 +48,10 @@ export const push = (...args: any) => {
  * Aciona navegação e consome identificador customizado em link (separador #)
  * @param link
  * @param params
- * @param onGoBack
+ * @param callbackFn
  */
-export const anchorNavigate = (link: string, params?: any, onGoBack?: () => void) => {
-  console.log('navigating', link, params)
+export const anchorNavigate = (link: string, params?: any, callbackFn?: () => void) => {
+  console.log('navigating to:', link, 'with params:', params)
 
   try {
     if (link.indexOf('http') !== -1 || link.indexOf('itms:') !== -1 || link.indexOf('market:') !== -1) {

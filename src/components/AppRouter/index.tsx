@@ -1,4 +1,4 @@
-import DEFAULT_ROUTES from '../../routes.tsx';
+import appRoutes from '../../routes.tsx';
 import { Stack } from '../Navigation';
 import {AppRoute} from "../../lib/router";
 
@@ -6,7 +6,7 @@ interface Props {
   routes?: Array<AppRoute>
 }
 
-const AppRouter = ({ routes = DEFAULT_ROUTES }: Props) => {
+const AppRouter = ({ routes = appRoutes }: Props) => {
   return (
     <Stack.Navigator
       screenOptions={{
@@ -20,7 +20,7 @@ const AppRouter = ({ routes = DEFAULT_ROUTES }: Props) => {
       }}
     >
       { routes.map((route, index) => {
-        // validações de rota
+        // validações de rota ?
         return (
           <Stack.Screen
             name={route.name!}

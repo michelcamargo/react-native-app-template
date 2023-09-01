@@ -1,9 +1,35 @@
 import {AppRoute} from "./lib/router";
 import AuthenticationScreen from "./domains/Authentication";
 import HomeScreen from "./domains/Home";
-import TabNavigator from "./components/Navigation/tab-navigator";
+import TabNavigator from "./components/Navigation/TabNavigator";
+import MainMenuScreen from "./domains/MainMenu";
 
-const defaultAppRoutes: Array<AppRoute> = [
+const bottomTabAppRoutes: Array<AppRoute> = [
+  {
+    name: 'main-menu',
+    Component: MainMenuScreen,
+    options: {
+      title: "menu",
+      headerShown: false,
+      // tabBarIcon: ({color, size}) => <Icon.Search color={color} size={32}/>,
+      detachPreviousScreen: true,
+      gestureEnabled: false
+    }
+  },
+  {
+    name: 'home',
+    Component: HomeScreen,
+    options: {
+      title: "Início",
+      // tabBarIcon: ({color, size}) => <Icon.Home color={color} size={32} />,
+      unmountOnBlur: false
+    },
+  },
+]
+
+const TabNavigation = <TabNavigator tabs={bottomTabAppRoutes} />;
+
+const appRoutes: Array<AppRoute> = [
   // {
   //   name: 'splash',
   //   Component: <></>,
@@ -25,7 +51,7 @@ const defaultAppRoutes: Array<AppRoute> = [
   },
   {
     name: 'main',
-    Component: TabNavigator,
+    Component: TabNavigation,
     options: {
       title: "Tabs",
       headerShown: false,
@@ -35,30 +61,4 @@ const defaultAppRoutes: Array<AppRoute> = [
   },
 ]
 
-const bottomTabAppRoutes: Array<AppRoute> = [
-  // {
-  //   name: 'main-menu',
-  //   Component: <></>,
-  //   options: {
-  //     title: "menu",
-  //     headerShown: false,
-  //     tabBarIcon: ({color, size}) => <Icon.Search color={color} size={32}/>,
-  //     detachPreviousScreen: true,
-  //     gestureEnabled: false
-  //   }
-  // },
-  {
-    name: 'home',
-    Component: HomeScreen,
-    options: {
-      title: "Início",
-      // tabBarIcon: ({color, size}) => <Icon.Home color={color} size={32} />,
-      unmountOnBlur: false
-    },
-  },
-]
-
-export default {
-  defaultAppRoutes,
-  bottomTabAppRoutes,
-};
+export default appRoutes;

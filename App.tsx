@@ -16,7 +16,7 @@ import { Stack, navigationRef } from './src/components/Navigation';
 import { registerRootComponent } from "expo";
 import theme from './src/theme'
 import AuthenticationScreen from "./src/domains/Authentication";
-import TabNavigator from "./src/components/Navigation/tab-navigator";
+import TabNavigator from "./src/components/Navigation/TabNavigator";
 import toastConfig from "./src/components/Toaster/config";
 import Toast from "react-native-toast-message";
 import * as nativeStyle from "./src/theme/native.global";
