@@ -1,58 +1,43 @@
 import { NavigationContainer } from "@react-navigation/native";
 import Constants from 'expo-constants';
-import { useFonts } from 'expo-font';
 import {
   ActivityIndicator,
   Keyboard,
   Platform,
   SafeAreaView,
-  StatusBar, StyleSheet,
+  StatusBar,
   TouchableWithoutFeedback,
   View
 } from "react-native";
 // // ----- Importação necessária para funcionamento do CSS in JS
-// import { ThemeProvider, ThemeProviderComponent } from "styled-components";
-// import Styled from "./modules/styled";
-// // -----
 import Toast from "react-native-toast-message";
+import { useTheme } from "styled-components/native";
 
 import AppRouter from "./components/AppRouter";
 import { navigationRef } from './components/Navigation';
 import toastConfig from "./components/Toaster/config";
 import defaultAppRoutes from "./routes";
-import { Colors, Typography } from "./theme/constants";
-// import theme from "./theme/light";
-import * as nativeStyle from "./theme/native.global";
-
-const customFonts = {
-  'Colus-Regular': require('./assets/fonts/Colus-Regular.ttf'),
-  'Urbanist-Regular': require('./assets/fonts/Urbanist-Regular.ttf'),
-  'Urbanist-Light': require('./assets/fonts/Urbanist-Light.ttf'),
-  'Urbanist-Bold': require('./assets/fonts/Urbanist-Bold.ttf')
-};
 
 /**
- * Componente principal da aplicação
+ * Base da interface com implementação de rotas
  */
 const Main = () => {
-  const [fontsLoaded] = useFonts(customFonts);
-  if (!fontsLoaded) return <ActivityIndicator />;
+  const currentTheme = useTheme();
   
   return (
-    // <ThemeProvider theme={theme}>
-    <View style={{ backgroundColor: Colors.backgroundWarning, height: 100, width: 100, flex: 1 }}>
-      <View style={{ backgroundColor: Colors.actionPrimary, height: Constants.statusBarHeight }}>
+    <View style={{ backgroundColor: currentTheme.colors.backgroundWarning, height: 100, width: 100, flex: 1 }}>
+      <View style={{ backgroundColor: currentTheme.colors.actionPrimary, height: Constants.statusBarHeight }}>
         <StatusBar
-          backgroundColor={Colors.actionPrimary}
+          backgroundColor={currentTheme.colors.actionPrimary}
           barStyle={Platform.OS == "ios" ? "light-content" : "default"}
           translucent
         />
       </View>
-      <SafeAreaView style={{ flex: 1, backgroundColor: Colors.backgroundPrimary }}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: currentTheme.colors.backgroundPrimary }}>
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
           <NavigationContainer
             ref={navigationRef}
-            fallback={<ActivityIndicator color={Colors.actionPrimary} />}
+            fallback={<ActivityIndicator color={currentTheme.colors.actionPrimary} />}
           >
             {/*<OrderFormProvider>*/}
             <AppRouter routes={defaultAppRoutes} />
@@ -62,7 +47,6 @@ const Main = () => {
         </TouchableWithoutFeedback>
       </SafeAreaView>
     </View>
-    // </ThemeProvider>
   );
 };
 

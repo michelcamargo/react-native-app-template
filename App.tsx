@@ -1,109 +1,133 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import { GluestackUIProvider, Text, config } from "@gluestack-ui/themed";
 import { NavigationContainer } from "@react-navigation/native";
 import { registerRootComponent } from "expo";
 import { useFonts } from "expo-font";
+import { requestTrackingPermissionsAsync } from "expo-tracking-transparency";
 import {
-  ActivityIndicator,
-  Keyboard,
-  SafeAreaView,
+  ActivityIndicator, BackHandler,
   StyleSheet,
-  TouchableWithoutFeedback,
 } from "react-native";
 import Toast from "react-native-toast-message";
+import { ThemeProvider } from "styled-components/native";
 
+import DeviceStatusBar from "./src/components/DeviceStatusBar";
+import DeviceWorkableArea from "./src/components/DeviceWorkableArea";
 import HeaderComponent from "./src/components/HeaderComponent";
 import { Stack, navigationRef } from './src/components/Navigation';
 import BottomTabNavigation from "./src/components/Navigation/BottomTabNavigation";
 import toastConfig from "./src/components/Toaster/config";
 import AuthenticationScreen from "./src/domains/Authentication";
-import theme from './src/theme';
+import appThemes from "./src/theme";
 import * as nativeStyle from "./src/theme/native.global";
+// import Styled from "./modules/styled";
+// // -----
 
 const customFonts = {
-  // 'Colus-Regular': require('./src/assets/fonts/Colus-Regular.ttf'),
+  // 'Colus-Regular': require('./assets/fonts/Colus-Regular.ttf'),
+  // 'Urbanist-Regular': require('./assets/fonts/Urbanist-Regular.ttf'),
+  // 'Urbanist-Light': require('./assets/fonts/Urbanist-Light.ttf'),
+  // 'Urbanist-Bold': require('./assets/fonts/Urbanist-Bold.ttf')
 };
 
+/**
+ * Raiz da aplicação
+ */
 export default function App() {
   // const { registerForPushNotificationsAsync, handleNotificationResponse } = useNotifications();
   
-  const currentTheme = theme.lightTheme;
+  /**
+   * Lista de telas onde a ação de voltar é bloqueada
+   */
+  const forbiddenGoBackScreens: Array<string> = [
+    "home",
+    "main-menu",
+    "search",
+  ];
   
   /**
-   * Inicialização da aplicação
+   * Solicita permissões para o uso da aplicação
    */
-  useEffect(() => {
-  //   requestTrackingPermissionsAsync().then(res => {
-  //     if (res.status === 'granted') {
-  //       console.log('Yay! I have user permission to track data');
-  //     }
-  //   });
-  //
-  //   BackHandler.addEventListener('hardwareBackPress', handleBackButton);
-  //
-  //
-  //
-  //   registerForPushNotificationsAsync();
-  //   Notifications.setNotificationHandler({
-  //     handleNotification: async () => ({
-  //       shouldShowAlert: true,
-  //       shouldPlaySound: true,
-  //       shouldSetBadge: true,
-  //       priority: Notifications.AndroidNotificationPriority.MAX
-  //     }),
-  //   });
-  //
-  //   // const firedResponseListener =
-  //   //   Notifications.addNotificationReceivedListener(
-  //   //      handleNotificationResponse
-  //   //   );
-  //
-  //   const interactResponseListener =
-  //     Notifications.addNotificationResponseReceivedListener(
-  //       handleNotificationResponse
-  //     )
-  //
-  //   return () => {
-  //     if (interactResponseListener) Notifications.removeNotificationSubscription(interactResponseListener);
-  //   }
-  }, []);
+  const requestAppPermissions = () => {
+    requestTrackingPermissionsAsync().then(res => {
+      if (res.status === 'granted') {
+        console.log('Permissões de tracking garantidas.');
+      }
+    });
+  };
+  
+  /**
+   * Trata notificações da aplicação
+   */
+  const runNotificationService = () => {
+    // registerForPushNotificationsAsync();
+    // Notifications.setNotificationHandler({
+    //   handleNotification: async () => ({
+    //     shouldShowAlert: true,
+    //     shouldPlaySound: true,
+    //     shouldSetBadge: true,
+    //     priority: Notifications.AndroidNotificationPriority.MAX
+    //   }),
+    // });
 
-  const [fontsLoaded] = useFonts(customFonts);
-  if (!fontsLoaded) return <ActivityIndicator />;
+    // const firedResponseListener =
+    //   Notifications.addNotificationReceivedListener(
+    //      handleNotificationResponse
+    //   );
+
+    // const interactResponseListener =
+    //     Notifications.addNotificationResponseReceivedListener(
+    //       handleNotificationResponse
+    //     );
+
+    return () => {
+      // if (interactResponseListener) Notifications.removeNotificationSubscription(interactResponseListener);
+    };
+  };
   
-  /**
-   * Faz com que a fonte padrão do celular não afete a fonte do app
-   */
+  // Impede que o sistema sobrescreva as fonte da aplicação
+  // eslint-disable-next-line
   if ((Text as any).defaultProps == null) (Text as any).defaultProps = {};
+  // eslint-disable-next-line
   (Text as any).defaultProps.allowFontScaling = false;
   
   /**
-   * Bloqueia ação de voltar do celular nas telas descritas
+   * Inicialização
    */
-  // const handleBackButton = () => {
-  //   const pageNames: Array<string> = [
-  //     "home",
-  //     "main-menu",
-  //     "search",
-  //   ];
-  //   if(!navigationRef.current.getCurrentRoute()) return true;
-  //   const currentPage = navigationRef.current.getCurrentRoute().name;
-  //   return pageNames.indexOf(currentPage) != -1;
-  // };
+  useEffect(() => {
+    requestAppPermissions();
+    BackHandler.addEventListener('hardwareBackPress', handleBackButton);
+  
+    runNotificationService();
+  }, []);
+  
+  const [currentTheme, setCurrentTheme] = useState(appThemes[0]);
+  const [fontsLoaded] = useFonts(customFonts);
+  if (!fontsLoaded) return <ActivityIndicator />;
+  
+  const appThemeHandler = keyName => {
+    const theme = appThemes.find(availableTheme => availableTheme.key === keyName);
+    
+    if (!theme) return;
+    
+    setCurrentTheme(theme);
+  };
+  
+  /**
+   * Trata ação de voltar do sistema
+   */
+  const handleBackButton = () => {
+    if (!navigationRef.current.getCurrentRoute()) return true;
+    const currentPage = navigationRef.current.getCurrentRoute().name;
+    return forbiddenGoBackScreens.indexOf(currentPage) != -1;
+  };
   
   return (
-    // <ThemeProvider theme={currentTheme}>
-    <GluestackUIProvider config={config.theme}>
-      {/*<View style={{backgroundColor: currentTheme.colors.actionPrimary, height: currentTheme.screen.height}}>*/}
-      {/*  <StatusBar*/}
-      {/*    backgroundColor={currentTheme.colors.actionPrimary}*/}
-      {/*    barStyle={Platform.OS == "ios" ? "light-content" : "default"}*/}
-      {/*    translucent*/}
-      {/*  />*/}
-      {/*</View>*/}
-      <SafeAreaView style={{ flex: 1, backgroundColor: currentTheme.colors.backgroundPrimary }}>
-        <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+    <ThemeProvider theme={currentTheme}>
+      <GluestackUIProvider config={config.theme}>
+        <DeviceStatusBar />
+        <DeviceWorkableArea keyboardDismiss>
           <NavigationContainer
             ref={navigationRef}
             fallback={<ActivityIndicator color={currentTheme.colors.actionPrimary} />}
@@ -117,7 +141,8 @@ export default function App() {
                 cardStyle: { backgroundColor: currentTheme.colors.backgroundPrimary }
               }}
               defaultScreenOptions={{
-                headerLeftContainerStyle: { width: 0 }
+                headerLeftContainerStyle: { width: 0 },
+                changeTheme: targetTheme => appThemeHandler(targetTheme),
               }}
             >
               {/*    <Stack.Screen*/}
@@ -153,9 +178,9 @@ export default function App() {
             <Toast config={toastConfig} />
             {/*</OrderFormProvider>*/}
           </NavigationContainer>
-        </TouchableWithoutFeedback>
-      </SafeAreaView>
-    </GluestackUIProvider>
+        </DeviceWorkableArea>
+      </GluestackUIProvider>
+    </ThemeProvider>
   );
 }
 
@@ -171,14 +196,14 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0,
     borderTopWidth: 0,
     position: 'absolute',
-    backgroundColor: theme.lightTheme.colors.monoWhite,
+    // backgroundColor: currentTheme.colors.monoWhite,
     borderRadius: 14,
     width: '100%'
   },
   commonTabHeader: {
     height: 70,
     width: '100%',
-    backgroundColor: theme.lightTheme.colors.actionPrimary,
+    // backgroundColor: currentTheme.colors.actionPrimary,
     borderBottomLeftRadius: nativeStyle.Radius.large,
     borderBottomRightRadius: nativeStyle.Radius.large,
     elevation: 8,
@@ -200,8 +225,8 @@ const styles = StyleSheet.create({
     transform: [{ scale: .85 }]
   },
   backLabel: {
-    color: theme.lightTheme.colors.textPrimaryDark,
-    fontFamily: theme.lightTheme.typography.familyBody__bold,
+    // color: theme.lightTheme.colors.textPrimaryDark,
+    // fontFamily: theme.lightTheme.typography.familyBody__bold,
     fontSize: nativeStyle.Typography.sizeSmall,
     marginTop: 'auto',
     alignItems: 'flex-end',
@@ -210,6 +235,6 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-end'
   },
   backArrow: {
-    color: theme.lightTheme.colors.textPrimaryDark
+    // color: theme.lightTheme.colors.textPrimaryDark
   }
 });

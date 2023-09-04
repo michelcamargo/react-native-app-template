@@ -1,12 +1,14 @@
 import React from 'react';
 
-import { Box, Text } from "@gluestack-ui/themed";
+import { View, Text } from "react-native";
+
+import { ScreenWrapper } from './styles';
 
 const HomeScreen = () => {
   return (
-    <Box>
+    <ScreenWrapper>
       <Text>Tela inicial</Text>
-    </Box>
+    </ScreenWrapper>
   );
 };
 

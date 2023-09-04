@@ -1,8 +1,8 @@
 import { Screen, Spacing, Typography, Colors, Radius } from "./constants";
-import { CustomTheme } from "./styled";
+import { CustomTheme } from './styled';
 
-const lightTheme: CustomTheme = {
-  key: 'light',
+const darkTheme: CustomTheme = {
+  key: 'dark',
   colors: Colors,
   typography: Typography,
   screen: Screen,
@@ -10,4 +10,4 @@ const lightTheme: CustomTheme = {
   radius: Radius
 };
 
-export default lightTheme;
+export default darkTheme;
