@@ -1,10 +1,10 @@
 import React from 'react';
 
 import { View, Text, TouchableOpacity } from "react-native";
-import { BaseToast, ErrorToast, ToastConfigParams } from 'react-native-toast-message';
+import { ToastConfigParams } from 'react-native-toast-message';
 
-import { Typography } from "../../theme/constants";
 import { anchorNavigate } from "../Navigation";
+import Styled from './styles';
 
 interface OptionsProps {
 	type?: string,
@@ -40,47 +40,52 @@ const toastConfig = {
   // ),
 
   success: ({ text1, text2, props }: OptionsProps) => (
-    <View>
-      <View>
-        {/*<CustomText bold>{text1}</CustomText>*/}
-        <Text>{text1}</Text>
-      </View>
-			
-      { text2 &&
-      <View>
-        {/*<CustomText size={Typography.sizeSmall} color={Colors.monoDarkGray}>{text2}</CustomText>*/}
-        <Text>{text2}</Text>
-      </View>
-      }
-    </View>
+    <Styled.TouchableWrapper>
+      <Styled.BodyContainer>
+        <View>
+          {/*<CustomText bold>{text1}</CustomText>*/}
+          <Text>{text1}</Text>
+        </View>
+  
+        {text2 &&
+          <View>
+            {/*<CustomText size={Typography.sizeSmall} color={Colors.monoDarkGray}>{text2}</CustomText>*/}
+            <Text>{text2}</Text>
+          </View>
+        }
+      </Styled.BodyContainer>
+    </Styled.TouchableWrapper>
   ),
 
   info: ({ text1, text2, props }: OptionsProps) => (
-    <View>
-      <View>
-        {/*<CustomText bold>{text1}</CustomText>*/}
-        <Text>{text1}</Text>
-      </View>
-			
-      { text2 &&
-      <View>
-        <Text>{text2}</Text>
-      </View>
-      }
-    </View>
+    <Styled.TouchableWrapper>
+      <Styled.BodyContainer>
+        <View>
+          {/*<CustomText bold>{text1}</CustomText>*/}
+          <Text>{text1}</Text>
+        </View>
+  
+        { text2 &&
+          <View>
+            <Text>{text2}</Text>
+          </View>
+        }
+      </Styled.BodyContainer>
+    </Styled.TouchableWrapper>
   ),
 
   error: (props: ToastConfigParams<any>) => (
-    <ErrorToast
-      {...props}
-      text1Style={{
-        fontSize: 16,
-        fontFamily: Typography.familyBody__bold
-      }}
-      text2Style={{
-        fontSize: 13,
-      }}
-    />
+    <Styled.ErrorToast {...props} />
+    // <ErrorToast
+    //   {...props}
+    //   text1Style={{
+    //     fontSize: 16,
+    //     fontFamily: Typography.familyBody__bold
+    //   }}
+    //   text2Style={{
+    //     fontSize: 13,
+    //   }}
+    // />
 		
   ),
 	

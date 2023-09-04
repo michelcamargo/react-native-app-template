@@ -4,8 +4,6 @@ import * as WebBrowser from "expo-web-browser";
 
 import { RootStackParamList } from "../../lib/router";
 
-// import Survicate from "@survicate/react-native-survicate";
-
 /**
  * Cria referência para uso externo
  */

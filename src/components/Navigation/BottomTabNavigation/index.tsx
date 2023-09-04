@@ -1,13 +1,14 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { StyleSheet } from 'react-native';
+import { useTheme } from "styled-components/native";
 
 import HomeScreen from "../../../domains/Home";
 import MainMenuScreen from "../../../domains/MainMenu";
 import { AppRoute } from "../../../lib/router";
-import * as nativeStyle from "../../../theme/native.global";
 import HeaderComponent from "../../HeaderComponent";
+import { getBottomNavigationNativeStyles } from "./styles";
 
 interface Props {
+  route: any,
   tabs: Array<AppRoute>,
 }
 
@@ -42,9 +43,13 @@ export const Tab = createBottomTabNavigator();
 /**
  * Rotas relacionadas ao menu inferior da aplicação
  */
-const BottomTabNavigation = ({ tabs = defaultBottomTabs }: Props) => {
+const BottomTabNavigation = ({ tabs = defaultBottomTabs, route }: Props) => {
   // const orderContext = useContext(OrderFormContext);
   // const orderProductCount: number = orderContext?.state.order?.items?.length || 0;
+  const currentTheme = useTheme();
+  const nativeStyles = getBottomNavigationNativeStyles(currentTheme);
+  
+  console.log('BOTTOM TAB ROUTE >>>', route);
   
   return <Tab.Navigator
     backBehavior="order"
@@ -52,11 +57,11 @@ const BottomTabNavigation = ({ tabs = defaultBottomTabs }: Props) => {
     screenOptions={{
       tabBarShowLabel: false,
       headerShown: true,
-      headerStyle: styles.commonTabHeader,
+      headerStyle: nativeStyles.commonTabHeader,
       headerTitle: () =>
         <HeaderComponent />,
-      tabBarActiveTintColor: nativeStyle.Colors.actionPrimary,
-      tabBarStyle: styles.tabBar,
+      tabBarActiveTintColor: currentTheme.colors.actionPrimary,
+      tabBarStyle: nativeStyles.tabBar,
     }}
     screenListeners={{}}
     safeAreaInsets={{
@@ -64,7 +69,7 @@ const BottomTabNavigation = ({ tabs = defaultBottomTabs }: Props) => {
     }}
     sceneContainerStyle={{
       borderStyle: undefined,
-      backgroundColor: nativeStyle.Colors.backgroundPrimary,
+      backgroundColor: currentTheme.colors.backgroundPrimary,
       paddingBottom: 50
     }}
   >
@@ -74,39 +79,13 @@ const BottomTabNavigation = ({ tabs = defaultBottomTabs }: Props) => {
         name={item.name!}
         component={item.Component}
         options={item.options}
-        initialParams={item.initialParams}
+        initialParams={{
+          ...route.params,
+          ...item.initialParams
+        }}
       />
     )) }
   </Tab.Navigator>;
 };
-
-/**
- * Estilos nativos
- */
-const styles = StyleSheet.create({
-  tabBar: {
-    elevation: 10,
-    shadowOpacity: .05,
-    borderBottomWidth: 0,
-    borderTopWidth: 0,
-    position: 'absolute',
-    backgroundColor: nativeStyle.Colors.monoWhite,
-    borderTopRightRadius: 14,
-    borderTopLeftRadius: 14,
-    width: '100%'
-  },
-  commonTabHeader: {
-    height: 70,
-    backgroundColor: nativeStyle.Colors.actionPrimary,
-    borderBottomLeftRadius: nativeStyle.Radius.large,
-    borderBottomRightRadius: nativeStyle.Radius.large
-  },
-  attentionBadge: {
-    backgroundColor: nativeStyle.Colors.actionPrimary,
-    fontFamily: nativeStyle.Typography.familyBody__bold,
-    top: 8,
-    transform: [{ scale: .85 }]
-  }
-});
 
 export default BottomTabNavigation;

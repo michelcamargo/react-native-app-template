@@ -6,7 +6,8 @@ import { registerRootComponent } from "expo";
 import { useFonts } from "expo-font";
 import { requestTrackingPermissionsAsync } from "expo-tracking-transparency";
 import {
-  ActivityIndicator, BackHandler,
+  ActivityIndicator,
+  BackHandler,
   StyleSheet,
 } from "react-native";
 import Toast from "react-native-toast-message";
@@ -15,14 +16,13 @@ import { ThemeProvider } from "styled-components/native";
 import DeviceStatusBar from "./src/components/DeviceStatusBar";
 import DeviceWorkableArea from "./src/components/DeviceWorkableArea";
 import HeaderComponent from "./src/components/HeaderComponent";
+import { getHeaderNativeStyles } from "./src/components/HeaderComponent/styles";
+import LoadingFeedback from "./src/components/LoadingFeedback";
 import { Stack, navigationRef } from './src/components/Navigation';
 import BottomTabNavigation from "./src/components/Navigation/BottomTabNavigation";
 import toastConfig from "./src/components/Toaster/config";
 import AuthenticationScreen from "./src/domains/Authentication";
 import appThemes from "./src/theme";
-import * as nativeStyle from "./src/theme/native.global";
-// import Styled from "./modules/styled";
-// // -----
 
 const customFonts = {
   // 'Colus-Regular': require('./assets/fonts/Colus-Regular.ttf'),
@@ -36,6 +36,9 @@ const customFonts = {
  */
 export default function App() {
   // const { registerForPushNotificationsAsync, handleNotificationResponse } = useNotifications();
+  
+  const [currentTheme, setCurrentTheme] = useState(appThemes[0]);
+  const [fontsLoaded] = useFonts(customFonts);
   
   /**
    * Lista de telas onde a ação de voltar é bloqueada
@@ -51,8 +54,8 @@ export default function App() {
    */
   const requestAppPermissions = () => {
     requestTrackingPermissionsAsync().then(res => {
-      if (res.status === 'granted') {
-        console.log('Permissões de tracking garantidas.');
+      if (res.status !== 'granted') {
+        console.log('Permissões de tracking não garantidas.');
       }
     });
   };
@@ -102,8 +105,6 @@ export default function App() {
     runNotificationService();
   }, []);
   
-  const [currentTheme, setCurrentTheme] = useState(appThemes[0]);
-  const [fontsLoaded] = useFonts(customFonts);
   if (!fontsLoaded) return <ActivityIndicator />;
   
   const appThemeHandler = keyName => {
@@ -113,6 +114,8 @@ export default function App() {
     
     setCurrentTheme(theme);
   };
+  
+  const headerNativeStyles = getHeaderNativeStyles(currentTheme);
   
   /**
    * Trata ação de voltar do sistema
@@ -130,18 +133,20 @@ export default function App() {
         <DeviceWorkableArea keyboardDismiss>
           <NavigationContainer
             ref={navigationRef}
-            fallback={<ActivityIndicator color={currentTheme.colors.actionPrimary} />}
+            fallback={<LoadingFeedback minimal />}
           >
             {/*<OrderFormProvider>*/}
             <Stack.Navigator
               screenOptions={{
-                headerStyle: styles.commonStackHeader,
+                headerStyle: headerNativeStyles.commonStackHeader,
                 headerTitle: () => <HeaderComponent />,
                 headerLeftContainerStyle: { width: 0 },
                 cardStyle: { backgroundColor: currentTheme.colors.backgroundPrimary }
               }}
               defaultScreenOptions={{
                 headerLeftContainerStyle: { width: 0 },
+              }}
+              defaultInitialParams={{
                 changeTheme: targetTheme => appThemeHandler(targetTheme),
               }}
             >
@@ -173,6 +178,9 @@ export default function App() {
                   detachPreviousScreen: true,
                   gestureEnabled: false,
                 }}
+                initialParams={{
+                  changeTheme: targetTheme => appThemeHandler(targetTheme),
+                }}
               />
             </Stack.Navigator>
             <Toast config={toastConfig} />
@@ -190,50 +198,32 @@ registerRootComponent(App);
  * Estilos nativos
  */
 const styles = StyleSheet.create({
-  tabBar: {
-    elevation: .05,
-    shadowOpacity: .05,
-    borderBottomWidth: 0,
-    borderTopWidth: 0,
-    position: 'absolute',
-    // backgroundColor: currentTheme.colors.monoWhite,
-    borderRadius: 14,
-    width: '100%'
-  },
-  commonTabHeader: {
-    height: 70,
-    width: '100%',
-    // backgroundColor: currentTheme.colors.actionPrimary,
-    borderBottomLeftRadius: nativeStyle.Radius.large,
-    borderBottomRightRadius: nativeStyle.Radius.large,
-    elevation: 8,
-  },
-  commonStackHeader: {
-    height: 90,
-    backgroundColor: nativeStyle.Colors.backgroundPrimary,
-    elevation: 8
-  },
-  cleanStackHeader: {
-    height: 70,
-    backgroundColor: nativeStyle.Colors.backgroundPrimary,
-    elevation: 8
-  },
-  attentionBadge: {
-    backgroundColor: nativeStyle.Colors.actionPrimary,
-    fontFamily: nativeStyle.Typography.familyBody,
-    top: 8,
-    transform: [{ scale: .85 }]
-  },
-  backLabel: {
-    // color: theme.lightTheme.colors.textPrimaryDark,
-    // fontFamily: theme.lightTheme.typography.familyBody__bold,
-    fontSize: nativeStyle.Typography.sizeSmall,
-    marginTop: 'auto',
-    alignItems: 'flex-end',
-    height: '100%',
-    display: 'flex',
-    alignSelf: 'flex-end'
-  },
+  // tabBar: {
+  //   elevation: .05,
+  //   shadowOpacity: .05,
+  //   borderBottomWidth: 0,
+  //   borderTopWidth: 0,
+  //   position: 'absolute',
+  //   // backgroundColor: currentTheme.colors.monoWhite,
+  //   borderRadius: 14,
+  //   width: '100%'
+  // },
+  // attentionBadge: {
+  //   backgroundColor: nativeStyle.Colors.actionPrimary,
+  //   fontFamily: nativeStyle.Typography.familyBody,
+  //   top: 8,
+  //   transform: [{ scale: .85 }]
+  // },
+  // backLabel: {
+  //   // color: theme.lightTheme.colors.textPrimaryDark,
+  //   // fontFamily: theme.lightTheme.typography.familyBody__bold,
+  //   fontSize: nativeStyle.Typography.sizeSmall,
+  //   marginTop: 'auto',
+  //   alignItems: 'flex-end',
+  //   height: '100%',
+  //   display: 'flex',
+  //   alignSelf: 'flex-end'
+  // },
   backArrow: {
     // color: theme.lightTheme.colors.textPrimaryDark
   }
