@@ -141,7 +141,7 @@ export default function App() {
                 headerStyle: headerNativeStyles.commonStackHeader,
                 headerTitle: () => <HeaderComponent />,
                 headerLeftContainerStyle: { width: 0 },
-                cardStyle: { backgroundColor: currentTheme.colors.backgroundPrimary }
+                cardStyle: { backgroundColor: currentTheme.colors.background.primary }
               }}
               defaultScreenOptions={{
                 headerLeftContainerStyle: { width: 0 },

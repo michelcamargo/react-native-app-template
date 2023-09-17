@@ -11,7 +11,7 @@ const Index = () => {
   return (
     <Styled.StatusBarWrapper>
       <StatusBar
-        backgroundColor={currentTheme.colors.actionPrimary}
+        backgroundColor={currentTheme.colors.primary[5]}
         barStyle={Platform.OS == "ios" ? "light-content" : "default"}
         translucent
       />

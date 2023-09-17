@@ -16,7 +16,7 @@ const LoadingFeedback = ({ minimal, title, description }: Props) => {
   
   if (minimal) {
     return (
-      <ActivityIndicator color={currentTheme.colors.actionPrimary} />
+      <ActivityIndicator color={currentTheme.colors.primary[5]} />
     );
   }
   

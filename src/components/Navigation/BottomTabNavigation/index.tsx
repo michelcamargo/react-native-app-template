@@ -60,7 +60,7 @@ const BottomTabNavigation = ({ tabs = defaultBottomTabs, route }: Props) => {
       headerStyle: nativeStyles.commonTabHeader,
       headerTitle: () =>
         <HeaderComponent />,
-      tabBarActiveTintColor: currentTheme.colors.actionPrimary,
+      tabBarActiveTintColor: currentTheme.colors.primary[5],
       tabBarStyle: nativeStyles.tabBar,
     }}
     screenListeners={{}}
@@ -69,7 +69,7 @@ const BottomTabNavigation = ({ tabs = defaultBottomTabs, route }: Props) => {
     }}
     sceneContainerStyle={{
       borderStyle: undefined,
-      backgroundColor: currentTheme.colors.backgroundPrimary,
+      backgroundColor: currentTheme.colors.background.primary,
       paddingBottom: 50
     }}
   >

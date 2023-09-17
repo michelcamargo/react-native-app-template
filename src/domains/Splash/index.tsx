@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 
 import { View, Animated } from 'react-native';
+import { useTheme } from "styled-components/native";
 
 // import MainLogo from "../../assets/svg/main-logo";
 // import BackAssets from "../../assets/svg/logo-bg-assets";
 // import { anchorNavigate } from "../../components/Navigation";
 // import * as nativeStyles from '../../theme/native.global';
-import { Colors } from "../../theme/native.global";
+// import { Colors } from "../../theme/native.global";
 
 // const FadeInView = (props: any) => {
 //   const fadeAnim = useRef(new Animated.Value(0)).current;
@@ -53,6 +54,7 @@ import { Colors } from "../../theme/native.global";
 
 const AnimatedWrapper = (props: any) => {
   const [animation, setAnimation] = useState(new Animated.Value(0));
+  const currentTheme = useTheme();
   
   useEffect(() => {
     Animated.timing(animation, {
@@ -64,7 +66,7 @@ const AnimatedWrapper = (props: any) => {
   
   const colorInterpolation = animation.interpolate({
     inputRange: [0, 1],
-    outputRange:[Colors.actionPrimary , Colors.backgroundPrimary]
+    outputRange:[currentTheme.colors.primary[5] , currentTheme.colors.background.primary]
   });
   
   const animatedStyle = {
