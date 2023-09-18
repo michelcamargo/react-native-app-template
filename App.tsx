@@ -1,27 +1,21 @@
 import { useEffect, useState } from "react";
 
 import { GluestackUIProvider, Text, config } from "@gluestack-ui/themed";
-import { NavigationContainer } from "@react-navigation/native";
 import { registerRootComponent } from "expo";
 import { useFonts } from "expo-font";
 import { requestTrackingPermissionsAsync } from "expo-tracking-transparency";
 import {
   ActivityIndicator,
   BackHandler,
-  StyleSheet,
 } from "react-native";
 import Toast from "react-native-toast-message";
 import { ThemeProvider } from "styled-components/native";
 
+import AppRouter from "./src";
 import DeviceStatusBar from "./src/components/DeviceStatusBar";
 import DeviceWorkableArea from "./src/components/DeviceWorkableArea";
-import HeaderComponent from "./src/components/HeaderComponent";
-import { getHeaderNativeStyles } from "./src/components/HeaderComponent/styles";
-import LoadingFeedback from "./src/components/LoadingFeedback";
-import { Stack, navigationRef } from './src/components/Navigation';
-import BottomTabNavigation from "./src/components/Navigation/BottomTabNavigation";
+import { navigationRef } from './src/components/Navigation';
 import toastConfig from "./src/components/Toaster/config";
-import AuthenticationScreen from "./src/domains/Authentication";
 import appThemes from "./src/theme";
 
 const customFonts = {
@@ -39,6 +33,14 @@ export default function App() {
   
   const [currentTheme, setCurrentTheme] = useState(appThemes[0]);
   const [fontsLoaded] = useFonts(customFonts);
+  
+  const appThemeHandler = keyName => {
+    const theme = appThemes.find(availableTheme => availableTheme.key === keyName);
+    
+    if (!theme) return;
+    
+    setCurrentTheme(theme);
+  };
   
   /**
    * Lista de telas onde a ação de voltar é bloqueada
@@ -107,16 +109,6 @@ export default function App() {
   
   if (!fontsLoaded) return <ActivityIndicator />;
   
-  const appThemeHandler = keyName => {
-    const theme = appThemes.find(availableTheme => availableTheme.key === keyName);
-    
-    if (!theme) return;
-    
-    setCurrentTheme(theme);
-  };
-  
-  const headerNativeStyles = getHeaderNativeStyles(currentTheme);
-  
   /**
    * Trata ação de voltar do sistema
    */
@@ -131,100 +123,12 @@ export default function App() {
       <GluestackUIProvider config={config.theme}>
         <DeviceStatusBar />
         <DeviceWorkableArea keyboardDismiss>
-          <NavigationContainer
-            ref={navigationRef}
-            fallback={<LoadingFeedback minimal />}
-          >
-            {/*<OrderFormProvider>*/}
-            <Stack.Navigator
-              screenOptions={{
-                headerStyle: headerNativeStyles.commonStackHeader,
-                headerTitle: () => <HeaderComponent />,
-                headerLeftContainerStyle: { width: 0 },
-                cardStyle: { backgroundColor: currentTheme.colors.background.primary }
-              }}
-              defaultScreenOptions={{
-                headerLeftContainerStyle: { width: 0 },
-              }}
-              defaultInitialParams={{
-                changeTheme: targetTheme => appThemeHandler(targetTheme),
-              }}
-            >
-              {/*    <Stack.Screen*/}
-              {/*      name="splash"*/}
-              {/*      component={SplashScreen}*/}
-              {/*      options={{*/}
-              {/*        headerShown: false,*/}
-              {/*        detachPreviousScreen: true,*/}
-              {/*        gestureEnabled: false*/}
-              {/*      }}*/}
-              {/*    />*/}
-              <Stack.Screen
-                name="auth"
-                component={AuthenticationScreen}
-                options={{
-                  title: "Login",
-                  headerShown: false,
-                  detachPreviousScreen: true,
-                  gestureEnabled: false,
-                }}
-              />
-              <Stack.Screen
-                name="main"
-                component={BottomTabNavigation}
-                options={{
-                  title: "Tabs",
-                  headerShown: false,
-                  detachPreviousScreen: true,
-                  gestureEnabled: false,
-                }}
-                initialParams={{
-                  changeTheme: targetTheme => appThemeHandler(targetTheme),
-                }}
-              />
-            </Stack.Navigator>
-            <Toast config={toastConfig} />
-            {/*</OrderFormProvider>*/}
-          </NavigationContainer>
+          <AppRouter currentTheme={currentTheme} themeHandler={appThemeHandler} />
         </DeviceWorkableArea>
+        <Toast config={toastConfig} />
       </GluestackUIProvider>
     </ThemeProvider>
   );
 }
 
 registerRootComponent(App);
-
-/**
- * Estilos nativos
- */
-const styles = StyleSheet.create({
-  // tabBar: {
-  //   elevation: .05,
-  //   shadowOpacity: .05,
-  //   borderBottomWidth: 0,
-  //   borderTopWidth: 0,
-  //   position: 'absolute',
-  //   // backgroundColor: currentTheme.colors.monoWhite,
-  //   borderRadius: 14,
-  //   width: '100%'
-  // },
-  // attentionBadge: {
-  //   backgroundColor: nativeStyle.Colors.actionPrimary,
-  //   fontFamily: nativeStyle.Typography.familyBody,
-  //   top: 8,
-  //   transform: [{ scale: .85 }]
-  // },
-  // backLabel: {
-  //   // color: theme.lightTheme.colors.textPrimaryDark,
-  //   // fontFamily: theme.lightTheme.typography.familyBody__bold,
-  //   fontSize: nativeStyle.Typography.sizeSmall,
-  //   marginTop: 'auto',
-  //   alignItems: 'flex-end',
-  //   height: '100%',
-  //   display: 'flex',
-  //   alignSelf: 'flex-end'
-  // },
-  backArrow: {
-    // color: theme.lightTheme.colors.textPrimaryDark
-  }
-});

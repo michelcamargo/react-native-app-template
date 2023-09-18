@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Platform, StatusBar, View } from "react-native";
+import { Platform, StatusBar } from "react-native";
 import { useTheme } from "styled-components/native";
 
 import Styled from './styles';
@@ -11,7 +11,7 @@ const Index = () => {
   return (
     <Styled.StatusBarWrapper>
       <StatusBar
-        backgroundColor={currentTheme.colors.primary[5]}
+        backgroundColor={currentTheme.colors.primary[1]}
         barStyle={Platform.OS == "ios" ? "light-content" : "default"}
         translucent
       />

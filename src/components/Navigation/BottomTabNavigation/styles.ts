@@ -7,16 +7,20 @@ export const getBottomNavigationNativeStyles = currentTheme => StyleSheet.create
     borderBottomWidth: 0,
     borderTopWidth: 0,
     position: 'absolute',
-    backgroundColor: currentTheme.colors.light[9],
+    // backgroundColor: currentTheme.colors.light[9],
     borderTopRightRadius: 14,
     borderTopLeftRadius: 14,
-    width: '100%'
   },
   commonTabHeader: {
-    height: 70,
-    backgroundColor: currentTheme.colors.primary[5],
     borderBottomLeftRadius: currentTheme.radius.large,
-    borderBottomRightRadius: currentTheme.radius.large
+    borderBottomRightRadius: currentTheme.radius.large,
+  },
+  commonTabHeaderBgContainer: {
+  
+  },
+  commonTabHeaderTitleContainer: {
+    width: '100%',
+    display: 'flex',
   },
   attentionBadge: {
     backgroundColor: currentTheme.colors.primary[5],

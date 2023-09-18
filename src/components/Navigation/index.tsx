@@ -22,6 +22,10 @@ const externalNavigate = (url: string) => {
   WebBrowser.openBrowserAsync(url);
 };
 
+export const backForbiddenScreens = [
+  'main-menu'
+];
+
 /**
  * Navega internamente utilizando parâmetros de rotas da aplicação
  * @param name

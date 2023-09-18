@@ -5,6 +5,7 @@ import HomeScreen from "../../../domains/Home";
 import MainMenuScreen from "../../../domains/MainMenu";
 import { AppRoute } from "../../../lib/router";
 import HeaderComponent from "../../HeaderComponent";
+import { backForbiddenScreens } from "../index";
 import { getBottomNavigationNativeStyles } from "./styles";
 
 interface Props {
@@ -51,15 +52,19 @@ const BottomTabNavigation = ({ tabs = defaultBottomTabs, route }: Props) => {
   
   console.log('BOTTOM TAB ROUTE >>>', route);
   
+  const isBackForbidden = backForbiddenScreens.indexOf(route.name) !== -1;
+  
   return <Tab.Navigator
     backBehavior="order"
     initialRouteName="home"
     screenOptions={{
+      headerBackgroundContainerStyle: nativeStyles.commonTabHeaderBgContainer,
       tabBarShowLabel: false,
       headerShown: true,
       headerStyle: nativeStyles.commonTabHeader,
+      headerTitleContainerStyle: nativeStyles.commonTabHeaderTitleContainer,
       headerTitle: () =>
-        <HeaderComponent />,
+        <HeaderComponent hideBackAction={isBackForbidden} />,
       tabBarActiveTintColor: currentTheme.colors.primary[5],
       tabBarStyle: nativeStyles.tabBar,
     }}
