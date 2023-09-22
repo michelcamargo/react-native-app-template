@@ -4,6 +4,7 @@ import { Button } from "@gluestack-ui/themed";
 import { View, Text } from "react-native";
 
 // import { AuthStepsEnum } from "../../lib/auth";
+import ActionButton from "../../components/ActionButton";
 import { ScreenWrapper } from './styles';
 
 interface Props {
@@ -23,17 +24,13 @@ const HomeScreen = ({ route, navigation }: Props) => {
   return (
     <ScreenWrapper>
       <Text>Tela inicial</Text>
-      <Button onPress={() => changeTheme('dark')}>
-        <Text>
-          Tema escuro
-        </Text>
-      </Button>
+      <ActionButton onPress={() => changeTheme('dark')}>
+        Tema escuro
+      </ActionButton>
   
-      <Button onPress={() => changeTheme('light')}>
-        <Text>
-          Tema claro
-        </Text>
-      </Button>
+      <ActionButton onPress={() => changeTheme('light')}>
+        Tema claro
+      </ActionButton>
     </ScreenWrapper>
   );
 };

@@ -14,7 +14,7 @@ const AuthActionsContainer = styled(Box)`
 `;
 
 const HeroBrandLogo = styled(Text)`
-
+  font-size: ${({ theme }) => theme?.typography.size.larger};
 `;
 
 const AuthMainOptionLabel = styled(Text)`

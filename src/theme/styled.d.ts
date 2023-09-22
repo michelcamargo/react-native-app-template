@@ -13,10 +13,11 @@ type CustomThemeColorRanges = {
     950?: string
 }
 
-export type CustomThemeColors = {
+export type CustomThemePalette = {
     primary: CustomThemeColorRanges,
     secondary: CustomThemeColorRanges,
     tertiary: CustomThemeColorRanges,
+    text: CustomThemeColorRanges,
     error: CustomThemeColorRanges,
     success: CustomThemeColorRanges,
     warning: CustomThemeColorRanges,
@@ -83,13 +84,34 @@ export type CustomThemeShadow = {
     boxLight: string,
 };
 
+export type CustomThemeOutline = {
+    small: string,
+    medium: string,
+    large: string,
+}
+
 // tipagem do tema
 export type CustomTheme = {
     key: string,
-    colors: CustomThemeColors,
+    colors: CustomThemePalette,
     typography: CustomThemeTypography,
     screen: CustomThemeScreen,
     spacing: CustomThemeSpacing,
     radius: CustomThemeRadius,
+    outline: CustomThemeOutline,
     shadow: CustomThemeShadow,
+}
+
+export type CustomThemeColors = {
+    primary: string,
+    secondary: string,
+    tertiary: string,
+    text: string,
+    error: string,
+    success: string,
+    warning: string,
+    info: string,
+    light: string,
+    backgroundPrimary: string,
+    backgroundSecondary: string,
 }

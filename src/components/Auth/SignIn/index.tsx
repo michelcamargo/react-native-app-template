@@ -1,11 +1,11 @@
 import React from 'react';
 
 import { Text, Button, ButtonText } from "@gluestack-ui/themed";
-import Styled from '../styles';
 
 import { AuthStepsEnum } from "../../../lib/auth";
-import { anchorNavigate } from "../../Navigation";
 import ActionButton from "../../ActionButton";
+import { anchorNavigate } from "../../Navigation";
+import Styled from '../styles';
 
 interface Props {
   stepHandler: (step: AuthStepsEnum) => void
@@ -20,23 +20,13 @@ const AuthSignInStep = ({ stepHandler }: Props) => {
       
       <Styled.AuthActionsContainer>
         <Styled.AuthMainOptionLabel>ENTRE</Styled.AuthMainOptionLabel>
-        {/*<Button onPress={() => anchorNavigate('main')}>*/}
-        {/*  <ButtonText>*/}
-        {/*    <Text>Entrar</Text>*/}
-        {/*  </ButtonText>*/}
-        {/*</Button>*/}
-        <ActionButton onPress={() => anchorNavigate('main')}>
+        <ActionButton onPress={() => anchorNavigate('main')} outlined>
           Entrar
         </ActionButton>
       </Styled.AuthActionsContainer>
   
       <Styled.AuthActionsContainer>
         <Text>ou registre-se</Text>
-        {/*<Button onPress={() => stepHandler(AuthStepsEnum.SIGNUP)}>*/}
-        {/*  <ButtonText >*/}
-        {/*    <Text>Criar conta</Text>*/}
-        {/*  </ButtonText>*/}
-        {/*</Button>*/}
         <ActionButton onPress={() => stepHandler(AuthStepsEnum.SIGNUP)}>
           Criar conta
         </ActionButton>

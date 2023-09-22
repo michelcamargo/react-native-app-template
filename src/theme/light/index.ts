@@ -1,5 +1,6 @@
 import { CustomTheme } from '../styled';
 import Colors from './constants/colors';
+import Outline from "./constants/outline";
 import Radius from './constants/radius';
 import Screen from './constants/screen';
 import Shadow from "./constants/shadow";
@@ -13,6 +14,7 @@ const lightTheme: CustomTheme = {
   screen: Screen,
   spacing: Spacing,
   radius: Radius,
+  outline: Outline,
   shadow: Shadow,
 };
 

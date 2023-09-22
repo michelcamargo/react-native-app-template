@@ -1,15 +1,20 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 
-import Styled from './styles';
+import Styled, { StyledProps } from './styles';
 
-const ActionButton = props => {
+interface Props extends StyledProps {
+  children: ReactNode,
+  onPress?: () => void,
+}
+
+const ActionButton = (props: Props) => {
   
   const { children } = props;
   
   return (
     <Styled.ButtonWrapper {...props}>
       { typeof children === 'string' ? (
-        <Styled.ButtonTextContainer>
+        <Styled.ButtonTextContainer {...props}>
           <Styled.ButtonTextContent {...props}>{children}</Styled.ButtonTextContent>
         </Styled.ButtonTextContainer>
       ) : { children } }
