@@ -6,5 +6,5 @@ export const nativeHeight = Dimensions.get('screen').height;
 export default {
   width: `${nativeWidth}px`,
   height: `${nativeHeight}px`,
-  containerWidth: '98%',
+  containerWidth: '97%',
 };

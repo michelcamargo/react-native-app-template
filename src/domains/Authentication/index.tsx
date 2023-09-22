@@ -5,6 +5,7 @@ import { View } from "react-native";
 // import {anchorBack, anchorNavigate} from "../../components/Navigation";
 import AuthSteps from "../../components/Auth";
 import { AuthStepsEnum } from "../../lib/auth";
+import ScreenSession from "../../components/ScreenSession";
 // import CustomerService from "../../services/customer";
 // import * as Styled from "./styles";
 // import LoginStep from "./login";
@@ -59,9 +60,9 @@ class AuthenticationScreen extends Component<Props, State> {
   
   render() {
     return (
-      <View>
+      <ScreenSession container>
         { this.getAuthStepElements() }
-      </View>
+      </ScreenSession>
       // <Styled.KeyboardAvoidWrapper behavior={'height'} enabled={true}>
       // <Styled.Authentication>
       //   <Styled.HeaderWrapper>
@@ -86,7 +87,10 @@ class AuthenticationScreen extends Component<Props, State> {
   private getAuthStepElements = () => {
     switch (this.state.currentStep) {
       case AuthStepsEnum.SIGNIN:
-        return <AuthSteps.AuthSignInStep stepHandler={this.stepHandler} />;
+        return <AuthSteps.AuthSignInStep
+          stepHandler={this.stepHandler}
+          
+        />;
         // return <LoginStep
         //   changeStep={(step) => this.setState({currentStep: step})}
         //   setDoubleCheckToken={(token) => this.setState({
@@ -111,7 +115,9 @@ class AuthenticationScreen extends Component<Props, State> {
         //   })}
         // />
       case AuthStepsEnum.VALIDATION:
-        return <AuthSteps.AuthValidationStep stepHandler={this.stepHandler} />;
+        return <AuthSteps.AuthValidationStep
+          stepHandler={this.stepHandler}
+        />;
         // return <ValidationStep
         //   changeStep={(step) => this.setState({currentStep: step})}
         //   doubleCheckToken={this.state.inputData.doubleCheckToken}
@@ -125,13 +131,19 @@ class AuthenticationScreen extends Component<Props, State> {
         //   password={this.state.inputData.password}
         // />
       case AuthStepsEnum.SIGNUP:
-        return <AuthSteps.AuthSignUpStep stepHandler={this.stepHandler} />;
+        return <AuthSteps.AuthSignUpStep
+          stepHandler={this.stepHandler}
+        />;
         // return <RegisterAccountStep changeStep={(step) => this.setState({currentStep: step})} />
       case AuthStepsEnum.RECOVERY:
-        return <AuthSteps.AuthRecoveryStep stepHandler={this.stepHandler} />;
+        return <AuthSteps.AuthRecoveryStep
+          stepHandler={this.stepHandler}
+        />;
         // return <PasswordRecoveryStep changeStep={(step) => this.setState({currentStep: step})} />
       default:
-        return <AuthSteps.AuthSignInStep stepHandler={this.stepHandler} />;
+        return <AuthSteps.AuthSignInStep
+          stepHandler={this.stepHandler}
+        />;
         // return <LoginStep
         //   changeStep={(step) => this.setState({currentStep: step})}
         //   setDoubleCheckToken={(token) => this.setState({
