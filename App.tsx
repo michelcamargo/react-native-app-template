@@ -14,9 +14,10 @@ import { ThemeProvider } from "styled-components/native";
 import AppRouter from "./src";
 import DeviceStatusBar from "./src/components/DeviceStatusBar";
 import DeviceWorkableArea from "./src/components/DeviceWorkableArea";
-import { navigationRef } from './src/components/Navigation';
+// import { navigationRef } from './src/components/Navigation';
 import toastConfig from "./src/components/Toaster/config";
 import appThemes from "./src/theme";
+import Navigation from "./src/helpers/navigation";
 
 const customFonts = {
   // 'Colus-Regular': require('./assets/fonts/Colus-Regular.ttf'),
@@ -41,15 +42,6 @@ export default function App() {
     
     setCurrentTheme(theme);
   };
-  
-  /**
-   * Lista de telas onde a ação de voltar é bloqueada
-   */
-  const forbiddenGoBackScreens: Array<string> = [
-    "home",
-    "main-menu",
-    "search",
-  ];
   
   /**
    * Solicita permissões para o uso da aplicação
@@ -102,21 +94,12 @@ export default function App() {
    */
   useEffect(() => {
     requestAppPermissions();
-    BackHandler.addEventListener('hardwareBackPress', handleBackButton);
+    BackHandler.addEventListener('hardwareBackPress', Navigation.backButtonHandler);
   
     runNotificationService();
   }, []);
   
   if (!fontsLoaded) return <ActivityIndicator />;
-  
-  /**
-   * Trata ação de voltar do sistema
-   */
-  const handleBackButton = () => {
-    if (!navigationRef.current.getCurrentRoute()) return true;
-    const currentPage = navigationRef.current.getCurrentRoute().name;
-    return forbiddenGoBackScreens.indexOf(currentPage) != -1;
-  };
   
   return (
     <ThemeProvider theme={currentTheme}>

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { anchorBack } from "../../Navigation";
+import Navigation from "../../../helpers/navigation";
 import Styled from './styles';
 
 interface Props {
@@ -9,7 +9,7 @@ interface Props {
 
 const BackButton = ({ action }: Props) => {
   return (
-    <Styled.BackButtonWrapper onPress={() => action ? action() : anchorBack()}>
+    <Styled.BackButtonWrapper onPress={() => action ? action() : Navigation.back()}>
       <Styled.BackButtonContainer>
         <Styled.BackButtonLabel>Voltar</Styled.BackButtonLabel>
       </Styled.BackButtonContainer>

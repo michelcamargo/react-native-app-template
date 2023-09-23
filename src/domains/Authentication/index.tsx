@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
 
-import { View } from "react-native";
-
-// import {anchorBack, anchorNavigate} from "../../components/Navigation";
 import AuthSteps from "../../components/Auth";
-import { AuthStepsEnum } from "../../lib/auth";
 import ScreenSession from "../../components/ScreenSession";
+import { AuthStepsEnum } from "../../lib/auth";
 // import CustomerService from "../../services/customer";
 // import * as Styled from "./styles";
 // import LoginStep from "./login";

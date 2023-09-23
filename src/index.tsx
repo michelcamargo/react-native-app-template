@@ -1,10 +1,10 @@
-import { NavigationContainer } from "@react-navigation/native";
+import { createNavigationContainerRef, NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
 
 import HeaderComponent from "./components/HeaderComponent";
 import LoadingFeedback from "./components/LoadingFeedback";
-import { navigationRef, Stack } from './components/Navigation';
-import { AppRoute } from "./lib/router";
-import defaultAppRoutes from "./routes";
+import { AppRoute, RootStackParamList } from "./lib/router";
+import DEFAULT_ROUTES from "./routes";
 
 interface Props {
   themeHandler: (targetTheme: string) => void,
@@ -12,10 +12,17 @@ interface Props {
   routes?: Array<AppRoute>
 }
 
+export const navigationRef = createNavigationContainerRef<RootStackParamList>();
+
+/**
+ * Pilha de navegação padrão
+ */
+export const Stack = createStackNavigator();
+
 /**
  * Base da interface com implementação de rotas
  */
-const AppRouter = ({ currentTheme, themeHandler, routes = defaultAppRoutes }: Props) => {
+const AppRouter = ({ currentTheme, themeHandler, routes = DEFAULT_ROUTES }: Props) => {
   return (
     <NavigationContainer
       ref={navigationRef}

@@ -1,8 +1,8 @@
-import BottomTabNavigation from './components/Navigation/BottomTabNavigation';
 import AuthenticationScreen from './domains/Authentication';
+import MainStack from "./domains/Main";
 import { AppRoute } from './lib/router';
 
-const defaultAppRoutes: Array<AppRoute> = [
+const APP_DEFAULT_ROUTES: Array<AppRoute> = [
   // {
   //   name: 'splash',
   //   Component: <></>,
@@ -24,9 +24,9 @@ const defaultAppRoutes: Array<AppRoute> = [
   },
   {
     name: 'main',
-    Component: BottomTabNavigation,
+    Component: MainStack,
     options: {
-      title: 'Tabs',
+      title: 'MainStack',
       headerShown: false,
       detachPreviousScreen: true,
       gestureEnabled: false
@@ -34,4 +34,4 @@ const defaultAppRoutes: Array<AppRoute> = [
   },
 ];
 
-export default defaultAppRoutes;
+export default APP_DEFAULT_ROUTES;

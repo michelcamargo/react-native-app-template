@@ -3,7 +3,7 @@ import React from 'react';
 import { View, Text, TouchableOpacity } from "react-native";
 import { ToastConfigParams } from 'react-native-toast-message';
 
-import { anchorNavigate } from "../Navigation";
+import Navigation from "../../helpers/navigation";
 import Styled from './styles';
 
 interface OptionsProps {
@@ -90,7 +90,7 @@ const toastConfig = {
   ),
 	
   // error: ({ text1, text2, props }: OptionsProps) => (
-  // 	<Styled.TouchableWrapper onPress={() => anchorNavigate('cart')}>
+  // 	<Styled.TouchableWrapper onPress={() => Navigation.go('cart')}>
   // 		<Styled.Heading>
   // 			<CustomText size={Typography.sizeSemiLarge} bold>{text1}</CustomText>
   // 		</Styled.Heading>
@@ -102,7 +102,7 @@ const toastConfig = {
   // ),
 	
   orderUpdate: ({ props }: OptionsProps) => (
-    <TouchableOpacity onPress={() => anchorNavigate('cart')}>
+    <TouchableOpacity onPress={() => Navigation.go('cart')}>
       <View>
         <Text>{'Pedido atualizado!'}</Text>
       </View>

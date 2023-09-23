@@ -5,7 +5,6 @@ import { useTheme } from "styled-components/native";
 
 // import MainLogo from "../../assets/svg/main-logo";
 // import BackAssets from "../../assets/svg/logo-bg-assets";
-// import { anchorNavigate } from "../../components/Navigation";
 // import * as nativeStyles from '../../theme/native.global';
 // import { Colors } from "../../theme/native.global";
 
