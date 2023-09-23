@@ -59,14 +59,14 @@ const BottomTabNavigation = ({ tabs = defaultBottomTabs, route }: Props) => {
     initialRouteName="home"
     screenOptions={{
       headerBackgroundContainerStyle: nativeStyles.commonTabHeaderBgContainer,
-      tabBarShowLabel: false,
-      headerShown: true,
+      tabBarShowLabel: true,
+      // headerShown: true,
       headerStyle: nativeStyles.commonTabHeader,
-      headerTitleContainerStyle: nativeStyles.commonTabHeaderTitleContainer,
+      // headerTitleContainerStyle: nativeStyles.commonTabHeaderTitleContainer,
       headerTitle: () =>
         <HeaderComponent hideBackAction={isBackForbidden} />,
       tabBarActiveTintColor: currentTheme.colors.primary[5],
-      tabBarStyle: nativeStyles.tabBar,
+      // tabBarStyle: nativeStyles.tabBar,
     }}
     screenListeners={{}}
     safeAreaInsets={{

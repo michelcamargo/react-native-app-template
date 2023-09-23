@@ -12,7 +12,7 @@ const colors: CustomThemeColors = {
   info: "#93dde8",
   light: "#FFFFFF",
   backgroundPrimary: "#FFFFFF",
-  backgroundSecondary: "#797979",
+  backgroundSecondary: "#c6e4f8",
 };
 
 export default CustomThemePaletteBuilder(colors);

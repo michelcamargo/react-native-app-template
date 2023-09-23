@@ -6,6 +6,8 @@ import { AuthStepsEnum } from "../../../lib/auth";
 import ActionButton from "../../ActionButton";
 import { anchorNavigate } from "../../Navigation";
 import Styled from '../styles';
+import HeroLogo from "../../HeroLogo";
+import ScreenSession from "../../ScreenSession";
 
 interface Props {
   stepHandler: (step: AuthStepsEnum) => void
@@ -14,23 +16,21 @@ interface Props {
 const AuthSignInStep = ({ stepHandler }: Props) => {
   return (
     <Styled.AuthContainer>
-      <Styled.AuthHeroContainer>
-        <Styled.HeroBrandLogo>AIR COMMAND</Styled.HeroBrandLogo>
-      </Styled.AuthHeroContainer>
-      
-      <Styled.AuthActionsContainer>
+      <ScreenSession>
+        <HeroLogo />
+      </ScreenSession>
+      <ScreenSession>
         <Styled.AuthMainOptionLabel>ENTRE</Styled.AuthMainOptionLabel>
         <ActionButton onPress={() => anchorNavigate('main')} outlined>
           Entrar
         </ActionButton>
-      </Styled.AuthActionsContainer>
-  
-      <Styled.AuthActionsContainer>
+      </ScreenSession>
+      <ScreenSession>
         <Text>ou registre-se</Text>
         <ActionButton onPress={() => stepHandler(AuthStepsEnum.SIGNUP)}>
           Criar conta
         </ActionButton>
-      </Styled.AuthActionsContainer>
+      </ScreenSession>
     </Styled.AuthContainer>
   );
 };
