@@ -9,7 +9,7 @@ import { AppRoute } from "../../lib/router";
 import HomeScreen from "../Home";
 import MainMenuScreen from "../MainMenu";
 
-interface BottomNavigationProps {
+interface MainStackProps {
   route: any,
   tabs: Array<AppRoute>,
 }
@@ -65,7 +65,7 @@ export const getBottomNavigationNativeStyles = currentTheme => StyleSheet.create
 /**
  * Rotas relacionadas ao menu inferior da aplicação
  */
-const MainStack = ({ bottomTabRoutes = mainStackRoutes, route }: BottomNavigationProps) => {
+const MainStack = ({ bottomTabRoutes = mainStackRoutes, route }: MainStackProps) => {
   // const orderContext = useContext(OrderFormContext);
   // const orderProductCount: number = orderContext?.state.order?.items?.length || 0;
   const currentTheme = useTheme();
